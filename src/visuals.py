@@ -15,12 +15,11 @@ class Visualizer(BaseProcessor, VisualConfigMixin):
         BaseProcessor.__init__(self, df)
         VisualConfigMixin.__init__(self)
         
-    if not os.path.exists('reports'):
-        os.makedirs('reports')
-
-       
+        if not os.path.exists('reports'):
+            os.makedirs('reports')
+            print(" Visual reports directory established.")
     
-    print(" Visual reports directory established.")
+    
 
     def run_all_plots(self):
         print("\n " + "Generating visual reports.".center(65, "-"))
@@ -28,12 +27,13 @@ class Visualizer(BaseProcessor, VisualConfigMixin):
         self._plot_daily_revenue()
         self._plot_tip_relations()
         self._plot_segment_analysis()
+        self._plot_tip_distribution()
 
         print(f"All charts have been saved to the 'reports/' folder")
         print("-" * 65)
 
     def _plot_daily_revenue(self):
-        plt.figure()
+        plt.figure(figsize=self.FIG_SIZE)
 
         daily_data = self.df.groupby('day', observed=True)['total_bill'].sum().reset_index()
 
@@ -87,7 +87,7 @@ class Visualizer(BaseProcessor, VisualConfigMixin):
         plt.close()
     
     def _plot_tip_distribution(self):
-        plt.figure()
+        plt.figure(figsize=self.FIG_SIZE)
         
         temp_df = self.get_analysis_df()
         

@@ -1,8 +1,10 @@
 import seaborn as sns
+import pandas as pd
+import os
 
 class DataConfig:
         
-    DATASET_NAME = 'tips'
+    RAW_DATA_PATH = os.path.join('data', 'raw', 'tips.csv')
 
     P_TIME_SEGMENTS = [
         'is_workday_lunch',
@@ -29,4 +31,7 @@ class DataConfig:
     TEST_SIZE = 0.2
     
     def load_raw_data():
-        return sns.load_dataset(DataConfig.DATASET_NAME)
+        if os.path.exists(DataConfig.RAW_DATA_PATH):
+            return pd.read_csv(DataConfig.RAW_DATA_PATH)
+        else:
+            raise FileNotFoundError(f"File cannot found: {DataConfig.RAW_DATA_PATH}")
