@@ -18,7 +18,7 @@ class FeatureEngineer(FeaturesConfigMixin, BaseProcessor):
         #and service demand of a table, independent of its physical size.
             #1. Calculation Metrics           
         self.df['bill_per_person'] = self.df['total_bill'] / self.df['size']
-        self.df['tip_percentage'] = self.df['tip'] / self.df['total_bill']
+
 
             #2.Segmentation
                 #a. workday

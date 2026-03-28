@@ -20,6 +20,8 @@ class BusinessAnalyst(BaseProcessor,FeaturesConfigMixin):
     
     def print_performance_table(self):
         active, gaps = self.perform_gap_analysis()
+
+        temp_df = self.get_analysis_df()      
         
         print("\n" + "TIPS DATASET Performance Report".center(65, "="))
         print(f"{'Segment':<25} | {'Tables':<6} | {'Avg Tip %':<10} | {'Revenue':>12}")
@@ -27,7 +29,7 @@ class BusinessAnalyst(BaseProcessor,FeaturesConfigMixin):
             #Iterating through segments defined
             
         for segment in active:
-            data_subset = self.df[self.df[segment] == 1]
+            data_subset = temp_df[temp_df[segment] == 1]
             count = len(data_subset)
             avg_tip = data_subset['tip_percentage'].mean() * 100
             rev = data_subset['total_bill'].sum()
@@ -44,8 +46,10 @@ class BusinessAnalyst(BaseProcessor,FeaturesConfigMixin):
     
     #to calculate and display records and actionable business recommendations
     def print_strategic_insights(self):
-        best_tip_row = self.df.loc[self.df['tip_percentage'].idxmax()]
-        max_bill_row = self.df.loc[self.df['total_bill'].idxmax()]
+
+        temp_df = self.get_analysis_df()
+        best_tip_row = temp_df.loc[temp_df['tip_percentage'].idxmax()]
+        max_bill_row = temp_df.loc[temp_df['total_bill'].idxmax()]
         
     #results
     

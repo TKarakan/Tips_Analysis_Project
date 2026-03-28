@@ -11,6 +11,12 @@ class BaseProcessor:
         self.CAT_COLS = DataConfig.CAT_COLS
         self.P_TIME_SEGMENTS = DataConfig.P_TIME_SEGMENTS
 
+
+    def get_analysis_df(self):
+      
+        temp_df = self.df.copy()
+        temp_df['tip_percentage'] = temp_df['tip'] / temp_df['total_bill']
+        return temp_df
  
 
     #to perform basic data quality and integrity check

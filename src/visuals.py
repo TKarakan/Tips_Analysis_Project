@@ -82,6 +82,17 @@ class Visualizer(BaseProcessor, VisualConfigMixin):
         plt.xlabel("Average Revenue ($)", fontsize=self.LABEL_SIZE)
         plt.ylabel("Segment", fontsize=self.LABEL_SIZE)
         
-        plt.tight_layout() # Başlıkların kesilmesini önler
+        plt.tight_layout()
         plt.savefig("reports/segment_performance.png")
+        plt.close()
+    
+    def _plot_tip_distribution(self):
+        plt.figure()
+        
+        temp_df = self.get_analysis_df()
+        
+        sns.histplot(temp_df['tip_percentage'], kde=True, color='green')
+        plt.title("Distribution of Tip Percentages", fontsize=self.TITLE_SIZE)
+        plt.xlabel("Tip Percentage (%)")
+        plt.savefig("reports/tip_distribution.png")
         plt.close()
